@@ -12,11 +12,13 @@ current_card = {}
 
 # Logic
 def change_word():
-    global current_card
+    global current_card, flip_timer
+    window.after_cancel(flip_timer)
     current_card = random.choice(list_of_words)
     canvas.itemconfig(card_background_image, image=front_flash_card_image)
     canvas.itemconfig(card_title, text="French", fill="black")
     canvas.itemconfig(card_word, text=current_card["French"], fill="black")
+    flip_timer = window.after(3000, flip_card)
 
 def flip_card():
     canvas.itemconfig(card_title, text="English", fill="white")
@@ -28,7 +30,7 @@ window = Tk()
 window.title("Flash Cards")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-window.after(3000, flip_card)
+flip_timer = window.after(3000, flip_card)
 
 # Canvas
 canvas = Canvas(width=800, height=526)
