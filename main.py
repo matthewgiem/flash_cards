@@ -12,6 +12,7 @@ list_of_words = data.to_dict(orient="records")
 # Logic
 def change_word():
     current_card = random.choice(list_of_words)
+    canvas.itemconfig(card_title, text="French")
     canvas.itemconfig(card_word, text=current_card["French"])
 
 # Window
@@ -40,6 +41,7 @@ correct_button = Button(image=correct)
 correct_button.grid(row=1, column=1)
 correct_button.config(highlightthickness=0, bg=BACKGROUND_COLOR, command=change_word)
 
+change_word()
 
 print(list_of_words)
 window.mainloop()
