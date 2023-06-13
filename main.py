@@ -6,7 +6,10 @@ import random
 BACKGROUND_COLOR = "#B1DDC6"
 
 # Import data as a PD dataframe
-data = pd.read_csv("data/french_words.csv")
+try:
+    data = pd.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    data = pd.read_csv("data/french_words.csv")
 list_of_words = data.to_dict(orient="records")
 current_card = {}
 
@@ -24,6 +27,13 @@ def flip_card():
     canvas.itemconfig(card_title, text="English", fill="white")
     canvas.itemconfig(card_word, text=current_card["English"], fill="white")
     canvas.itemconfig(card_background_image, image=back_flash_card_image)
+
+def is_known():
+    list_of_words.remove(current_card)
+    words_left = pd.DataFrame(list_of_words)
+    words_left.to_csv("data/words_to_learn.csv")
+    change_word()
+
 
 # Window
 window = Tk()
@@ -51,7 +61,7 @@ unknown_button.config(highlightthickness=0, bg=BACKGROUND_COLOR, command=change_
 
 correct_button = Button(image=correct)
 correct_button.grid(row=1, column=1)
-correct_button.config(highlightthickness=0, bg=BACKGROUND_COLOR, command=change_word)
+correct_button.config(highlightthickness=0, bg=BACKGROUND_COLOR, command=is_known)
 
 change_word()
 
