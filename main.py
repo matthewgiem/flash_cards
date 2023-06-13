@@ -31,7 +31,7 @@ def flip_card():
 def is_known():
     list_of_words.remove(current_card)
     words_left = pd.DataFrame(list_of_words)
-    words_left.to_csv("data/words_to_learn.csv")
+    words_left.to_csv("data/words_to_learn.csv", index=False)
     change_word()
 
 
